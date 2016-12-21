@@ -1,0 +1,18 @@
+Object1
+partA 2
+partB 8
+partC 4
+
+Object2
+partD 3
+partB 9
+
+Object3 
+partA 1
+partB 1000
+partC 500
+partD 450
+
+Object4
+partC 496
+

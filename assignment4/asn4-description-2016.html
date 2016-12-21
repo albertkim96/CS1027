@@ -1,0 +1,213 @@
+<html>
+<head>
+<TITLE>CS1027, Assignment 4</TITLE>
+<link rel="stylesheet" href="td.css" type="text/css" media="all" />
+</head>
+
+<body bgcolor="#FFFFFF">
+
+<CENTER>
+<h1><b>CS1027b Computer Science Fundamentals II</b></h1>
+<h2><b>Assignment 4</b></h2>
+<h2><b>Due: Sunday, April 3rd, 2016 at 11:55pm on Owl</b></h2>
+</CENTER>
+
+<h3>Description</h3>
+
+<p>
+The purpose of this assignment is to get experience working with several topics 
+presented in the course, including recursion, binary trees and various binary tree algorithms.
+</p>
+
+<p>
+Harry Brilliant, a former CS1027 student, has been hired
+by Poo Poo Canada Incorporated to build an efficient search program. Harry knows
+that binary trees can be used to search efficiently but his grasp of binary trees
+is a bit shaky, to say the least (he must have skipped all those lectures).
+</p>
+
+<p>
+Harry needs help in a big way. He needs to write a number of Java methods (all of
+which are static methods that will reside in <mark><b>PooPoo.java</b></mark>). 
+Towards that end, he has provided you with a zip
+file <a href="./Asn4ProvidedCode.zip">Asn4ProvidedCode.zip</a> which contains
+a number of java files:
+<ol>
+<li> <mark><b>PrettyPrintTree.java</b></mark> pretty prints a tree whose root is <mark><b>"root"</b></mark> 
+on your terminal.
+That is, use <mark><b>PrettyPrintTree.printNode(root)</b></mark> in <mark><b>PooPoo.java</b></mark>
+to pretty print your tree.
+Two examples are given below in this assignment handout. (An additional three examples of pretty printing
+manually coded trees can be seen by running
+the <mark><b>PrettyPrintTreeTest</b></mark> class code.
+This pretty printing code is "known" to be correct but be wary of one thing: the length of the printed
+links (made up of "/" or "\") between nodes in adjacent levels in the tree 
+is related to 2^{height-levelNum}. Thus for
+a tree of height 8 (8 levels) the length of the left and right links between
+the root and its left and right children (levelNum==1) has to be 2^7=128 to ensure pretty printing.
+This is completely unrealistic and will look like a mess on your terminal. 
+In general, it is not ideal (feasible) to print
+a tree with more than 4 levels. Note that all the trees in the list files (list0.txt to list6.txt) 
+print nicely.</li>
+<li> The <mark><b>BinaryTreeNode.java</b></mark> and <mark><b>LinearNode.java</b></mark> files are supplied,
+as well as various supporting java files for lists, queues, etc. that are
+used by the supplied code or can be used in the code you write.</li>
+<li> File <mark><b>InStringFile.java</b></mark> is also provided. <mark><b>PooPoo.java</b></mark> uses that code to
+read a list file and tokenize it into strings of one character long (this has been done for you). 
+<li> Test files, <mark><b>list0.txt</b></mark> to <mark><b>list6.txt</b></mark> are supplied for testing
+purposes.
+</ol>
+
+<p>
+Harry is a better businessman than a programmer and rather than try to write this code himself,
+has decided to hire you as a consultant to write it for him.
+Harry wants you to write four methods for <mark><b>PooPoo.java</b></mark>:
+<ol>
+<li> <mark><b>insertInBinaryTree</b></mark> is a recursive method that build a binary search tree.
+Its header statement is:
+<pre>
+public static BinaryTreeNode<String> insertInBinaryTree(BinaryTreeNode<String> root,
+                                                BinaryTreeNode<String> node)
+</pre>
+where <mark><b>node</b></mark> is a binary tree node with its element being the one character string
+to be inserted into the tree. <mark><b>root</b></mark> is the root of the tree. The base
+case of the recursion is when the tree is empty (root is null). In this case,
+make the <mark><b>root</b></mark> equal to <mark><b>node</b></mark> and return the root
+(node's left and right child nodes have been set to null by the constructor of 
+<mark><b>BinaryTreeNode</b></mark>).
+If the root is not null, use String's <mark><b>compareTo</b></mark>
+to compare the string elements of root and node (i.e. root.getElement().compareTo(node.getElement)).
+<mark><b>compareTo</b></mark> returns a negative number for < , 0 for == and a positive number for >. 
+Thus <= is necessary for storing duplicate string elements in the tree. 
+If the node element is <= the root element then
+insertion should be into the left tree pointed to by root.left. Thus root.left is set
+by the return value of <mark><b>insertInBinaryTree(root.left,node).</mark></b>. 
+If the node element is > the root element
+then insertion should be into the right tree pointed to by root.right. Thus root.right is set
+by the return value of <mark><b>insertInBinaryTree(root.right,node)</b></mark>. 
+In all cases, the return value of the method is always the current root value.</li>
+
+<li> <mark><b>countBinaryTreeNodes</b></mark> is a recursive method which counts the number
+of nodes in a tree by counting the number of nodes in the left and right non-null
+subtrees of a node and then adding 1 for that node. Its header statement is:
+<pre>
+public static int countBinaryTreeNodes(BinaryTreeNode<String> root)
+</pre> </li>
+<li> <mark><b>findHeight</b></mark> finds the height of a tree as the longest path from the root
+to any leaf node. An empty tree has height -1 (this is a base case). 
+A tree with just one node 
+has height 0 (this is another base case).
+In the general case, we find the height of the left and right subtrees recursively and add 1 to
+their maximum. Its header statement is:
+<pre>
+public static int findHeight(BinaryTreeNode<String> node)
+</pre> </li>
+
+<li> <mark><b> findWidth</b></mark> finds the maximum width of a tree. This is the level
+of the tree with the maximum number of nodes. This definition should immediately
+suggest that a level order traversal of the tree using a queue be used as a way to 
+compute the maximum width, with the width being
+the maximum value of queue.size() of the queues at each the tree level. The first level of the tree is
+the root with width 1. The second level of the tree has root removed from the queue
+and replaced by its children. The 3rd level of the tree has these nodes removed from
+the queue and replaced by
+their children, etc. When the queue becomes empty (queue.isEmpty()) the tree has been
+processed. Its header statement is:
+<pre>
+public static int findWidth(BinaryTreeNode<String> root)
+</pre>
+All the java files needed to do queue processing are in the zip file.
+</li>
+</ol>
+
+<p>
+Your are required to compute and print the height and height density and
+the width and width density for all trees in the list files. 
+The height density is the ratio of the height to the number of nodes in the tree (multiplied by 100).
+The greater the height the smaller this value is. A complete binary tree would have
+the highest density value for its height. On the other hand, the width density is the ratio of the width
+of the tree (the maximum number of nodes at any level) to the number of nodes in the tree (again, 
+multiplied by 100). Wider trees have larger values. Note that generally higher tree are narrower and
+shorter trees are wider for a fixed number of node in the tree.
+Code to print this information for a tree is provided in <mark><b>PooPoo.java</b></mark> but requires
+the above methods to do the computation.
+Examples of such values are given for lists 1 and 4 below.
+</p>
+
+<p>
+You may not find any tree java files on the course webpage useful for this assignment.
+You can and should google these binary algorithms on the web. Understand the logic of any
+algorithms you find before using. It is doubtful you will find java code that you can directly use
+in this assignment from the web. But if you do, any code you use from the web MUST be cited (referenced) in
+a comment above the code. The citation should allow an interested person to find this code
+in its original state on the web.
+
+Submit only <mark><b>PooPoo.java</b></mark> for this assignment. 
+Do NOT change any of the code supplied to you.
+</p>
+
+</p>
+<h4>Sample run with list1.txt</h4>
+<pre>
+6 token in list1.txt
+Number of nodes in the tree:6
+Height of tree: 3
+Height density:  50.00
+Width of tree: 2
+Width density:  33.33
+       H               
+      / \       
+     /   \      
+    /     \     
+   /       \    
+   A       J       
+    \       \   
+     \       \  
+     B       Z   
+      \         
+      D         
+</pre>
+<h4>Sample run with list4.txt</h4>
+<pre>
+31 token in list4.txt
+Number of nodes in the tree:31
+Height of tree: 4
+Height density:  12.90
+Width of tree: 16
+Width density:  51.61
+               a                               
+              / \               
+             /   \              
+            /     \             
+           /       \            
+          /         \           
+         /           \          
+        /             \         
+       /               \        
+       M               m               
+      / \             / \       
+     /   \           /   \      
+    /     \         /     \     
+   /       \       /       \    
+   F       T       f       t       
+  / \     / \     / \     / \   
+ /   \   /   \   /   \   /   \  
+ C   I   Q   W   c   i   q   w   
+/ \ / \ / \ / \ / \ / \ / \ / \ 
+B E H J P R V Z b e h j p r v z 
+</pre>
+<p>
+Three more pretty printed tree examples can be seen by running <mark><b>PrettyPrintTreeTest</b></mark>, 
+a test class in <mark><b>PrettyPrintTree.java</b></mark>.
+</p>
+
+<h3>Functional Specifications</h3>
+<ul>
+<li>Your program has to be compilable under Eclipse.</li>
+<li>Use Javadoc-style comments for each class and method. All significant variables must be commented.</li>
+<li>Use Java conventions and good Java programming techniques (meaningful variable names,
+  conventions for variable and constant names, etc). Indent your code properly.</li>
+<li>Remember that assignments are to be done individually and must be your own work.</li>
+</ul>
+</body>
+</html>

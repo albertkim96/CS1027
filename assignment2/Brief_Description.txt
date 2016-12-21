@@ -1,0 +1,4 @@
+Maze 3:	- When there was an end tile within the neighbour of start tile, it went to other direction instead.
+	- It took the longest path to find the end.
+Maze 4:	- There is no end in this maze.
+	- All the tiles have been pushed and popped.
